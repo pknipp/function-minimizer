@@ -17,7 +17,7 @@ router.get('/evaluate-function/:fnStr/:vars/:vals', (req, res) => {
     let exprStr = fnStr;
     vars = vars.slice(1, -1).split(",");
     vals = vals.slice(1, -1).split(",").map(val => Number(val));
-    vals.forEach((val, i) => exprStr = exprStr.split(vars[i]).join(val));
+    vals.forEach((val, i) => exprStr = exprStr.split(vars[i]).join(`(${val})`));
     console.log(exprStr);
     const parser = new ParseExpression(exprStr);
     parser.loadEMDAS().evalEMDAS();
