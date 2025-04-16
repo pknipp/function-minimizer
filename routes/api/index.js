@@ -1,10 +1,15 @@
 const router = require('express').Router();
+const ParseExpression = require('parse-expression');
+
 // const routes = ['only'];
 // routes.forEach(route => router.use(`/${route}`, require(`./${route}`)));
 
 router.get('/evaluate-expression/:exprStr', (req, res) => {
-    let exprStr = req.params.exprStr;
-    res.json({message: exprStr});
+    const exprStr = req.params.exprStr;
+    const parser = new ParseExpression(exprStr);
+    parser.loadEMDAS().evalEMDAS();
+    console.log(parser.vals[0]);
+    res.json({message: parser});
 });
 
 // router.get('/:rNmaxNmin', (req, res) => {
