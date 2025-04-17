@@ -11,7 +11,7 @@
     "express": "^4.16.4",
     "helmet": "^3.22.0",
     "http-errors": "~1.6.3",
-    "minimize-fn": "^1.0.1",
+    "minimize-fn": "^1.0.2",
     "morgan": "~1.9.1",
     "parse-expression": "^1.0.3",
     "per-env": "^1.0.2"

@@ -2,7 +2,7 @@ const router = require('express').Router();
 const ParseExpression = require('parse-expression');
 const Minimizer = require('minimize-fn');
 
-const { processExpr, parseArrayStr, parseVars, parseVals } = require("../helpers.js");
+const { processExpr, parseArrayStr, parseVars, parseVals, makeFn } = require("../helpers.js");
 
 // const routes = ['only'];
 // routes.forEach(route => router.use(`/${route}`, require(`./${route}`)));
@@ -77,10 +77,12 @@ router.get('/minimize-function/:fnStr/:vars', (req, res) => {
         return res.json({error});
     }
     const fn = makeFn(fnStr, vars);
-    let simplex = [];
+    const simplex = [];
     for (let i = 0; i <= vars.length; i++) {
         simplex.push(vars.map(_ => Math.random()));
+        // simplex.push(vars.map((_, j) => Number(i === j)));
     }
+
     const minimizer = new Minimizer(fn, simplex);
     result = minimizer.run();
 

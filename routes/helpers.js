@@ -56,11 +56,16 @@ const parseVals = valsIn => {
 
 const makeFn = (fnStr, vars) => {
     return vals => {
+        // console.log("vals = ", vals);
         let exprStr = fnStr;
-        vars.forEach((var, i) => exprStr = exprStr.split(var).join(`(${vals[i]})`));
+        vars.forEach((varName, i) => exprStr = exprStr.split(varName).join(`(${vals[i]})`));
+        // console.log("exprStr = ", exprStr);
+        const parser = new ParseExpression(exprStr);
+        parser.loadEMDAS().evalEMDAS();
+        console.log("parser.vals[0] = ", parser.vals[0]);
+        return parser.vals[0];
     };
-    const parser = new ParseExpression(exprStr);
-    return parser.loadEMDAS().evalEMDAS();
-}
+};
 
-module.exports = { processExpr, parseArrayStr, parseVars, parseVals };
+
+module.exports = { processExpr, parseArrayStr, parseVars, parseVals, makeFn };
