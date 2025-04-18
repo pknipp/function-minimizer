@@ -54,18 +54,56 @@ const parseVals = valsIn => {
     return {vals};
 }
 
+const parseSimplex = (simplexStrIn, nDim) => {
+    let simplexStr = simplexStrIn.replace(/\s/g, '');
+    if (simplexStr.length < 2 * nDim * nDim + 3 * nDim + 3) {
+        return {error: "Your simplex string is not sufficiently long."};
+    }
+    const leadChars = simplexStr.slice(0, 2);
+    if (leadChars === "[[") {
+        simplexStr = simplexStr.slice(2);
+    } else {
+        return {error: `Your simplex's leading characters wer ${leadChar}, not '[['.`};
+    }
+    let trailingChars = simplexStr.slice(-2);
+    if (trailingChars === "]]") {
+        simplexStr = simplexStr.slice(0, -2);
+    } else {
+        return {error: `Your simplex string's trailing characters were ${trailingChars}, not ']]'.`};
+    }
+    const arrayOfPointStrs = simplexStr.split("],[");
+    if (arrayOfPointStrs.length !== nDim + 1) {
+        return {error: `Your simplex length (${arrayOfPointStrs.length}) does not equal your vars length (${nDim}) plus one.`}
+    }
+    const simplex = [];
+    for (const pointStrs of arrayOfPointStrs) {
+        const point = [];
+        const strings = pointStrs.split(",");
+        if (strings.length !== nDim) {
+            return {error: `One of your simplex's points has ${strings.length} coordinates, not ${nDim}.`};
+        }
+        for (const string of strings) {
+            const number = Number(string);
+            if (!isFinite(number)) {
+                return {error: `One of the coordinates (${string}) cannot be parsed as a number.`};
+            } else {
+                point.push(number);
+            }
+        }
+        simplex.push(point);
+    }
+    return {simplex};
+}
+
 const makeFn = (fnStr, vars) => {
     return vals => {
-        // console.log("vals = ", vals);
         let exprStr = fnStr;
         vars.forEach((varName, i) => exprStr = exprStr.split(varName).join(`(${vals[i]})`));
-        // console.log("exprStr = ", exprStr);
         const parser = new ParseExpression(exprStr);
         parser.loadEMDAS().evalEMDAS();
-        console.log("parser.vals[0] = ", parser.vals[0]);
-        return parser.vals[0];
+        return {value: parser.vals[0], warnings: parser.warnings, error: parser.error};
     };
 };
 
 
-module.exports = { processExpr, parseArrayStr, parseVars, parseVals, makeFn };
+module.exports = { processExpr, parseArrayStr, parseVars, parseVals, parseSimplex, makeFn };

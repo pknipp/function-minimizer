@@ -2,7 +2,7 @@ const router = require('express').Router();
 const ParseExpression = require('parse-expression');
 const Minimizer = require('minimize-fn');
 
-const { processExpr, parseArrayStr, parseVars, parseVals, makeFn } = require("../helpers.js");
+const { processExpr, parseArrayStr, parseVars, parseVals, makeFn, parseSimplex } = require("../helpers.js");
 
 // const routes = ['only'];
 // routes.forEach(route => router.use(`/${route}`, require(`./${route}`)));
@@ -39,7 +39,7 @@ router.get('/evaluate-function/:fnStr/:vars/:vals', (req, res) => {
     vals = result.array;
     if (vars.length !== vals.length) {
         res.status(500);
-        console.log("vars/vals = ", vars, vals);
+        console.error("vars/vals = ", vars, vals);
         return res.json({error: `Your vars array length (${vars.length}) does not equal that of your vals array (${vals.length}).`});
     }
     result = parseVals(vals);
@@ -80,7 +80,6 @@ router.get('/minimize-function/:fnStr/:vars', (req, res) => {
     const simplex = [];
     for (let i = 0; i <= vars.length; i++) {
         simplex.push(vars.map(_ => Math.random()));
-        // simplex.push(vars.map((_, j) => Number(i === j)));
     }
 
     const minimizer = new Minimizer(fn, simplex);
@@ -91,17 +90,44 @@ router.get('/minimize-function/:fnStr/:vars', (req, res) => {
         console.error("result = ", result);
         return res.json({error: result});
     }
-    res.json({message: result});
+    res.json({message: result, fnStr});
 });
 
-// router.get('/:rNmaxNmin', (req, res) => {
-    // let params = req.params.rNmaxNmin.split("-");
-    // let [error, xs] = parseParams(params);
-    // if (error) {
-    //   res.status(500);
-    //   res.json({error});
-    // } else {
-    //   res.json({message: JSON.stringify(xs)});
-    // }
-//   });
+router.get('/minimize-function/:fnStr/:vars/:simplex', (req, res) => {
+    let {fnStr, vars, simplex} = req.params;
+    fnStr = processExpr(fnStr);
+    let result = parseArrayStr(vars);
+    if (result.error) {
+        res.status(500);
+        console.error("vars = ", vars);
+        return res.json({error: result.error});
+    }
+    vars = result.array;
+    let error = parseVars(vars);
+    if (error) {
+        res.status(500);
+        console.error("vars = ", vars);
+        return res.json({error});
+    }
+    const fn = makeFn(fnStr, vars);
+
+    result = parseSimplex(simplex, vars.length);
+    if (result.error) {
+        res.status(500);
+        console.error("simplex = ", simplex);
+        return res.json({error: result.error});
+    }
+    simplex = result.simplex;
+
+    const minimizer = new Minimizer(fn, simplex);
+    result = minimizer.run();
+
+    if (result.error) {
+        res.status(500);
+        console.error("result = ", result);
+        return res.json({error: result});
+    }
+    res.json({message: result, fnStr});
+});
+
 module.exports = router;
