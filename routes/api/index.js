@@ -2,18 +2,13 @@ const router = require('express').Router();
 const ParseExpression = require('parse-expression');
 const Minimizer = require('minimize-fn');
 
-const {
-    processEvaluateExpr,
-    processEvaluateFn,
-    processMinimize,
-    processMinimizeWithSimplex,
-} = require("../helpers.js");
+const handlers = require("../handlers.js");
 
 // const routes = ['only'];
 // routes.forEach(route => router.use(`/${route}`, require(`./${route}`)));
 
 router.get('/evaluate-expression/:exprStr', (req, res) => {
-    let result = processEvaluateExpr(req.params);
+    let result = handlers.evaluateExpr(req.params);
     if (result.error) {
         res.status(500);
         console.error({error: result.error});
@@ -22,7 +17,7 @@ router.get('/evaluate-expression/:exprStr', (req, res) => {
 });
 
 router.get('/evaluate-function/:fnStr/:vars/:vals', (req, res) => {
-    const result = processEvaluateFn(req.params);
+    const result = handlers.evaluateFn(req.params);
     if (result.error) {
         res.status(500);
         console.error({error: result.error});
@@ -32,7 +27,7 @@ router.get('/evaluate-function/:fnStr/:vars/:vals', (req, res) => {
 });
 
 router.get('/minimize-function/:fnStr/:vars', (req, res) => {
-    const result = processMinimize(req.params);
+    const result = handlers.minimize(req.params);
     if (result.error) {
         res.status(500);
         console.error({error: result.error});
@@ -42,7 +37,7 @@ router.get('/minimize-function/:fnStr/:vars', (req, res) => {
 });
 
 router.get('/minimize-function/:fnStr/:vars/:simplex', (req, res) => {
-    const result = processMinimizeWithSimplex(req.params);
+    const result = handlers.minimizeWithSimplex(req.params);
     if (result.error) {
         res.status(500);
         console.error({error: result.error});
