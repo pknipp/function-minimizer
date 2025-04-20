@@ -29,9 +29,11 @@ const vals = valsIn => {
     if (!valsIn.every(valStr => valStr)) {
         return {error: "One of your coordinate values is an empty string."}
     }
-    const vals = valsIn.map(valStr => Number(valStr));
-    for (const val of vals) {
-        if (!isFinite(val)) return {error: `One of your values (${val}) cannot be parsed as a finite number`};
+    const vals = [];
+    for (const valStr of valsIn) {
+        const val = Number(valStr);
+        if (!isFinite(val)) return {error: `One of your values (${valStr}) cannot be parsed as a finite number`};
+        vals.push(val);
     }
     return {vals};
 }

@@ -4,46 +4,14 @@ const Minimizer = require('minimize-fn');
 
 const handlers = require("../handlers.js");
 
+const make = handlers.make;
+
 // const routes = ['only'];
 // routes.forEach(route => router.use(`/${route}`, require(`./${route}`)));
 
-router.get('/evaluate-expression/:exprStr', (req, res) => {
-    let result = handlers.evaluateExpr(req.params);
-    if (result.error) {
-        res.status(500);
-        console.error({error: result.error});
-    }
-    res.json({message: result.message});
-});
-
-router.get('/evaluate-function/:fnStr/:vars/:vals', (req, res) => {
-    const result = handlers.evaluateFn(req.params);
-    if (result.error) {
-        res.status(500);
-        console.error({error: result.error});
-        return res.json({error: result.error});
-    }
-    res.json({message: result.info});
-});
-
-router.get('/minimize-function/:fnStr/:vars', (req, res) => {
-    const result = handlers.minimize(req.params);
-    if (result.error) {
-        res.status(500);
-        console.error({error: result.error});
-        return res.json({error: result.error});
-    }
-    res.json({message: result.info});
-});
-
-router.get('/minimize-function/:fnStr/:vars/:simplex', (req, res) => {
-    const result = handlers.minimizeWithSimplex(req.params);
-    if (result.error) {
-        res.status(500);
-        console.error({error: result.error});
-        return res.json({error: result.error});
-    }
-    res.json({message: result.info});
-});
+router.get('/evaluate-expression/:exprStr', make(handlers.evaluateExpr));
+router.get('/evaluate-function/:fnStr/:vars/:vals', make(handlers.evaluateFn));
+router.get('/minimize-function/:fnStr/:vars', make(handlers.minimize));
+router.get('/minimize-function/:fnStr/:vars/:simplex', make(handlers.minimizeWithSimplex));
 
 module.exports = router;

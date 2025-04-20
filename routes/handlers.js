@@ -4,11 +4,23 @@ const Minimizer = require('minimize-fn');
 const parsers = require('./parsers');
 const { processExpr, makeFn } = require('./helpers');
 
+const make = handler => {
+    return ({ params }, response) => {
+        const result = handler(params);
+        if (result.error) {
+            response.status(500);
+            console.error({error: result.error});
+            return response.json({error: result.error});
+        }
+        response.json({message: result.info});
+    }
+}
+
 const evaluateExpr = params => {
     const exprStr = processExpr(params.exprStr);
     const parser = new ParseExpression(exprStr);
     parser.loadEMDAS().evalEMDAS();
-    return {error: parser.error, message: parser};
+    return {error: parser.error, info: parser};
 }
 
 const evaluateFn = params => {
@@ -67,4 +79,4 @@ const minimizeWithSimplex = params => {
     return {error: result.error, info: {simplex, fnStr, result}};
 };
 
-module.exports = {evaluateExpr, evaluateFn, minimize, minimizeWithSimplex};
+module.exports = {evaluateExpr, evaluateFn, minimize, minimizeWithSimplex, make};
