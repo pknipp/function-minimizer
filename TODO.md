@@ -1,4 +1,3 @@
-Fix apparent bug (excessive iterations when nDim = 3).
 Allow user to increase maxIter.
 Render results in html.
 Make index page.

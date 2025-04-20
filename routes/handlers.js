@@ -45,7 +45,7 @@ const evaluateFn = params => {
 }
 
 const minimize = params => {
-    let {fnStr, vars} = params;
+    let {fnStr, vars, maxIters} = params;
     fnStr = processExpr(fnStr);
     let result = parsers.arrayStr(vars);
     if (result.error) return {error: result.error};
@@ -57,7 +57,7 @@ const minimize = params => {
     for (let i = 0; i <= vars.length; i++) {
         simplex.push(vars.map(_ => Math.random()));
     }
-    const minimizer = new Minimizer(fn, simplex);
+    const minimizer = new Minimizer(fn, simplex, maxIters);
     result = minimizer.run();
     return {error: result.error, info: {fnStr, result}};
 }
