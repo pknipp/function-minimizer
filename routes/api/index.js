@@ -11,9 +11,9 @@ const make = handlers.make;
 
 router.get('/evaluate-expression/:exprStr', make(handlers.evaluateExpr));
 router.get('/evaluate-function/:fnStr/:vars/:vals', make(handlers.evaluateFn));
-router.get('/minimize-function/:fnStr/:vars', make(handlers.minimize));
-// Ensure that this route does not collide with subsequent one.
-// router.get('/minimize-function/:fnStr/:vars/:maxIter', make(handlers.minimize));
+router.get('/minimize-function/:fnStr/:vars/random', make(handlers.minimize));
+router.get('/minimize-function/:fnStr/:vars/random/:maxIter', make(handlers.minimize));
 router.get('/minimize-function/:fnStr/:vars/:simplex', make(handlers.minimizeWithSimplex));
+router.get('/minimize-function/:fnStr/:vars/:simplex/:maxIter', make(handlers.minimizeWithSimplex));
 
 module.exports = router;
