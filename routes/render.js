@@ -3,7 +3,7 @@
 //   return await response.text();
 // }
 
-module.exports = json => {
+module.exports = (json, title) => {
   let html = `
     <html
       xml:lang="en"
@@ -13,7 +13,7 @@ module.exports = json => {
     <body>
     <div style="padding-top: 20px; padding-left: 40px; padding-right: 40px;">
       <div>
-        <h2>Function minimizer</h2>
+        <h2>${title}</h2>
         <a href="https://function-minimizer-adfd6c2c8012.herokuapp.com/">
           Return
         </a> to main page.
@@ -36,7 +36,7 @@ module.exports = json => {
   }
 
   let inputs = `
-    <div><h3>Inputs</h3>
+    <div><h3>Input(s):</h3>
     <ul>
       ${(stringPermanent && !fnStr) ? `<li>expression: ${stringPermanent} </li>` : ""}
       ${fnStr ? `<li>function: ${fnStr} </li>` : ""}
@@ -48,7 +48,7 @@ module.exports = json => {
 
   inputs += "</div>";
   const outputs = `
-    <div><h3>Outputs</h3 >
+    <div><h3>Output(s):</h3 >
       <ul>
         ${iter ? `
           <li>number of iterations needed to reach minimum: ${iter} </li>

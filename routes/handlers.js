@@ -24,9 +24,9 @@ const makeHtml = handler => {
         if (result.error) {
             response.status(500);
             console.error({error: result.error});
-            response.send(render({error: result.error}));
+            response.send(render({error: result.error}, result.title));
         } else {
-            response.send(render(result.info));
+            response.send(render(result.info, result.title));
         }
     };
 };
@@ -35,7 +35,7 @@ const evaluateExpr = params => {
     const exprStr = processExpr(params.exprStr);
     const parser = new ParseExpression(exprStr);
     parser.loadEMDAS().evalEMDAS();
-    return {error: parser.error, info: parser};
+    return {error: parser.error, info: parser, title: "Expression Evaluator"};
 }
 
 const evaluateFn = params => {
@@ -57,7 +57,11 @@ const evaluateFn = params => {
     coords.forEach((coord, i) => exprStr = exprStr.split(vars[i]).join(`(${coord})`));
     const parser = new ParseExpression(exprStr);
     parser.loadEMDAS().evalEMDAS();
-    return {error: parser.error, info: {fnStr, vars, coords, ...parser}};
+    return {
+        error: parser.error,
+        info: {fnStr, vars, coords, ...parser},
+        title: "Function Evaluator",
+    };
 }
 
 const minimize = params => {
@@ -82,7 +86,11 @@ const minimize = params => {
     }
     const minimizer = new Minimizer(fn, simplex, maxIter);
     result = minimizer.run();
-    return {error: result.error, info: {fnStr, ...{vars}, ...result, ...hasSimplex ? {simplex} : {}}};
+    return {
+        error: result.error,
+        info: {fnStr, ...{vars}, ...result, ...hasSimplex ? {simplex} : {}},
+        title: "Function Minimizer",
+    };
 }
 
 module.exports = {evaluateExpr, evaluateFn, minimize, makeJSON, makeHtml};
