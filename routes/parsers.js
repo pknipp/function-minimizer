@@ -40,7 +40,7 @@ const vals = valsIn => {
 
 const simplex = (simplexStrIn, nDim) => {
     let simplexStr = simplexStrIn.replace(/\s/g, '');
-    if (simplexStr.length < 2 * nDim * nDim + 3 * nDim + 3) {
+    if (simplexStr.length < 2 * nDim * nDim + 4 * nDim + 3) {
         return {error: `Your simplex string (${simplexStrIn}) is not sufficiently long.`};
     }
     const leadChars = simplexStr.slice(0, 2);
