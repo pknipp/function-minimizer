@@ -25,17 +25,17 @@ const vars = vars => {
     }
 }
 
-const vals = valsIn => {
-    if (!valsIn.every(valStr => valStr)) {
+const coords = coordsIn => {
+    if (!coordsIn.every(coordStr => coordStr)) {
         return {error: "One of your coordinate values is an empty string."}
     }
-    const vals = [];
-    for (const valStr of valsIn) {
-        const val = Number(valStr);
-        if (!isFinite(val)) return {error: `One of your values (${valStr}) cannot be parsed as a finite number`};
-        vals.push(val);
+    const coords = [];
+    for (const coordStr of coordsIn) {
+        const coord = Number(coordStr);
+        if (!isFinite(coord)) return {error: `One of your values (${coordStr}) cannot be parsed as a finite number`};
+        coords.push(coord);
     }
-    return {vals};
+    return {coords};
 }
 
 const simplex = (simplexStrIn, nDim) => {
@@ -79,4 +79,4 @@ const simplex = (simplexStrIn, nDim) => {
     return {simplex};
 }
 
-module.exports = { arrayStr, vars, vals, simplex };
+module.exports = { arrayStr, vars, coords, simplex };

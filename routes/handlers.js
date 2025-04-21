@@ -25,7 +25,7 @@ const evaluateExpr = params => {
 }
 
 const evaluateFn = params => {
-    let {fnStr, vars, vals} = params;
+    let {fnStr, vars, coords} = params;
     // fn will be changed to expression below
     let exprStr = processExpr(fnStr);
     let result = parsers.arrayStr(vars);
@@ -33,17 +33,17 @@ const evaluateFn = params => {
     vars = result.array;
     const error = parsers.vars(vars);
     if (error) return {error};
-    result = parsers.arrayStr(vals);
+    result = parsers.arrayStr(coords);
     if (result.error) return {error: result.error};
-    vals = result.array;
-    if (vars.length !== vals.length) return {error: `Your vars-array length (${vars.length}) does not equal your vals-array length (${vals.length})).`};
-    result = parsers.vals(vals);
+    coords = result.array;
+    if (vars.length !== coords.length) return {error: `Your vars-array length (${vars.length}) does not equal your coords-array length (${coords.length})).`};
+    result = parsers.coords(coords);
     if (result.error) return {error: result.error};
-    vals = result.vals;
-    vals.forEach((val, i) => exprStr = exprStr.split(vars[i]).join(`(${val})`));
+    coords = result.coords;
+    coords.forEach((coord, i) => exprStr = exprStr.split(vars[i]).join(`(${coord})`));
     const parser = new ParseExpression(exprStr);
     parser.loadEMDAS().evalEMDAS();
-    return {error: parser.error, info: {fnStr, vars, vals, parser}};
+    return {error: parser.error, info: {fnStr, vars, coords, ...parser}};
 }
 
 const minimize = params => {
@@ -68,7 +68,7 @@ const minimize = params => {
     }
     const minimizer = new Minimizer(fn, simplex, maxIter);
     result = minimizer.run();
-    return {error: result.error, info: {fnStr, result, ...hasSimplex ? {simplex} : {}}};
+    return {error: result.error, info: {fnStr, ...result, ...hasSimplex ? {simplex} : {}}};
 }
 
 module.exports = {evaluateExpr, evaluateFn, minimize, make};

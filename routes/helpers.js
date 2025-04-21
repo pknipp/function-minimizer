@@ -22,9 +22,9 @@ const isLegalChar = char => {
 const isLegalVar = chars => chars.length && isLegalStart(chars[0]) && chars.slice(1).split("").every(char => isLegalChar(char));
 
 const makeFn = (fnStr, vars) => {
-    return vals => {
+    return coords => {
         let exprStr = fnStr;
-        vars.forEach((varName, i) => exprStr = exprStr.split(varName).join(`(${vals[i]})`));
+        vars.forEach((varName, i) => exprStr = exprStr.split(varName).join(`(${coords[i]})`));
         const parser = new ParseExpression(exprStr);
         parser.loadEMDAS().evalEMDAS();
         return {value: parser.vals[0], warnings: parser.warnings, error: parser.error};
