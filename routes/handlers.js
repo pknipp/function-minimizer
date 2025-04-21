@@ -82,7 +82,7 @@ const minimize = params => {
     }
     const minimizer = new Minimizer(fn, simplex, maxIter);
     result = minimizer.run();
-    return {error: result.error, info: {fnStr, ...result, ...hasSimplex ? {simplex} : {}}};
+    return {error: result.error, info: {fnStr, ...{vars}, ...result, ...hasSimplex ? {simplex} : {}}};
 }
 
 module.exports = {evaluateExpr, evaluateFn, minimize, makeJSON, makeHtml};

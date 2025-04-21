@@ -20,10 +20,20 @@ module.exports = json => {
   `;
 
   if (json.error) return `${html}<br/><br/><div><b>Error:</b> ${json.error}</div>`;
-  let { stringPermanent, vals, vars, fnStr, coords, p, y, iter, simplex } = json;
+  let { stringPermanent, vals, vars, fnStr, coords, p, y, iter, simplex, warnings } = json;
   [stringPermanent, fnStr] = [stringPermanent, fnStr].map(
-    string => string && string.split("DIV").join("/").split("D").join("/"),
+    string => string && string.split("DIV").join("/").split("D").join("/").split("^").join("**"),
   );
+  if (p) {
+    const pNew = new Array(vars.length).fill(0);
+    for (let i = 0; i < y.length; i++) {
+      for (let j = 0; j < vars.length; j++) {
+        pNew[j] += p[i][j];
+      }
+    }
+    p = pNew.map(val => val / y.length);
+    y = y.reduce((yTotal, yOne) => yTotal + yOne) / y.length;
+  }
 
   let inputs = `
     <div><h3>Inputs</h3>
@@ -32,7 +42,7 @@ module.exports = json => {
       ${fnStr ? `<li>function: ${fnStr} </li>` : ""}
       ${vars ? `<li>variables: <i>${vars.join(", ")}</I> </li>` : ""}
       ${coords ? `<li>coordinates: (${coords.join(", ")}) </li>` : ""}
-      ${simplex ? `<li>simplex: ${simplex} </li>` : ""}
+      ${simplex ? `<li>simplex: ${JSON.stringify(simplex)} </li>` : ""}
     </ul>
   `;
 
@@ -40,9 +50,21 @@ module.exports = json => {
   const outputs = `
     <div><h3>Outputs</h3 >
       <ul>
+        ${iter ? `
+          <li>number of iterations needed to reach minimum: ${iter} </li>
+          <li> dependent variable: ${y} </li>
+          <li> independent variables:
+            <ul>
+              ${vars.map((varName, i) => `
+                <li>
+                  <I>${varName}</I> = ${p[i]}
+                </li>
+              `).join("")}
+            </ul>
+          </li>` : ""
+        }
         ${vals ? `<li>value: ${vals[0]} </li>` : ""}
-        ${y ? `<li>minimum value: ${y.reduce((sum, val) => sum + val)/y.length} </li>` : ""}
-        ${iter ? `<li>number of iterations: ${iter}` : ""}
+        ${warnings.length ? `<li>warnings: <ul>${warnings.map(warning => `<li>${warning}</li>`).join("")}</ul>` : ""}
       </ul>
     </div>
   `;

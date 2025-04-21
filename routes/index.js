@@ -3,7 +3,6 @@ const router = require('express').Router();
 const api = require('./api');
 const render = require('./render.js');
 const handlers = require('./handlers.js');
-console.log("handlers = ", handlers);
 
 const makeHtml = handlers.makeHtml;
 
