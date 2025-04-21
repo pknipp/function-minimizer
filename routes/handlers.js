@@ -3,8 +3,9 @@ const Minimizer = require('minimize-fn');
 
 const parsers = require('./parsers');
 const { processExpr, makeFn } = require('./helpers');
+const render = require('./render');
 
-const make = handler => {
+const makeJSON = handler => {
     return ({ params }, response) => {
         const result = handler(params);
         if (result.error) {
@@ -16,6 +17,19 @@ const make = handler => {
         }
     }
 }
+
+const makeHtml = handler => {
+    return ({ params }, response) => {
+        const result = handler(params);
+        if (result.error) {
+            response.status(500);
+            console.error({error: result.error});
+            response.send(render({error: result.error}));
+        } else {
+            response.send(render(result.info));
+        }
+    };
+};
 
 const evaluateExpr = params => {
     const exprStr = processExpr(params.exprStr);
@@ -71,4 +85,4 @@ const minimize = params => {
     return {error: result.error, info: {fnStr, ...result, ...hasSimplex ? {simplex} : {}}};
 }
 
-module.exports = {evaluateExpr, evaluateFn, minimize, make};
+module.exports = {evaluateExpr, evaluateFn, minimize, makeJSON, makeHtml};

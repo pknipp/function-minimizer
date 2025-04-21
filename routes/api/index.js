@@ -4,17 +4,17 @@ const Minimizer = require('minimize-fn');
 
 const handlers = require("../handlers.js");
 
-const make = handlers.make;
+const makeJSON = handlers.makeJSON;
 
 // const routes = ['only'];
 // routes.forEach(route => router.use(`/${route}`, require(`./${route}`)));
 
-router.get('/evaluate-expression/:exprStr', make(handlers.evaluateExpr));
-router.get('/evaluate-function/:fnStr/:vars/:coords', make(handlers.evaluateFn));
+router.get('/evaluate-expression/:exprStr', makeJSON(handlers.evaluateExpr));
+router.get('/evaluate-function/:fnStr/:vars/:coords', makeJSON(handlers.evaluateFn));
 ["random", ":simplex"].forEach(simplex => ["/:maxIter", ""].forEach(maxIter => {
     router.get(
         `/minimize-function/:fnStr/:vars/${simplex}${maxIter}`,
-        make(handlers.minimize),
+        makeJSON(handlers.minimize),
     );
 }));
 
