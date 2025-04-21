@@ -45,7 +45,8 @@ const evaluateFn = params => {
 }
 
 const minimize = params => {
-    let {fnStr, vars, maxIter} = params;
+    let {fnStr, vars, simplex, maxIter} = params;
+    const hasSimplex = simplex || false;
     fnStr = processExpr(fnStr);
     let result = parsers.arrayStr(vars);
     if (result.error) return {error: result.error};
@@ -53,30 +54,19 @@ const minimize = params => {
     const error = parsers.vars(vars);
     if (error) return {error};
     const fn = makeFn(fnStr, vars);
-    const simplex = [];
-    for (let i = 0; i <= vars.length; i++) {
-        simplex.push(vars.map(_ => Math.random()));
+    if (hasSimplex) {
+        result = parsers.simplex(simplex, vars.length);
+        if (result.error) return {error: result.error};
+        simplex = result.simplex;
+    } else {
+        simplex = [];
+        for (let i = 0; i <= vars.length; i++) {
+            simplex.push(vars.map(_ => Math.random()));
+        }
     }
     const minimizer = new Minimizer(fn, simplex, maxIter);
     result = minimizer.run();
-    return {error: result.error, info: {fnStr, result}};
+    return {error: result.error, info: {fnStr, result, ...hasSimplex ? {simplex} : {}}};
 }
 
-const minimizeWithSimplex = params => {
-    let {fnStr, vars, simplex, maxIter} = params;
-    fnStr = processExpr(fnStr);
-    let result = parsers.arrayStr(vars);
-    if (result.error) return {error: result.error};
-    vars = result.array;
-    const error = parsers.vars(vars);
-    if (error) return {error, info: {vars}};
-    const fn = makeFn(fnStr, vars);
-    result = parsers.simplex(simplex, vars.length);
-    if (result.error) return {error: result.error};
-    simplex = result.simplex;
-    const minimizer = new Minimizer(fn, simplex, maxIter);
-    result = minimizer.run();
-    return {error: result.error, info: {simplex, fnStr, result}};
-};
-
-module.exports = {evaluateExpr, evaluateFn, minimize, minimizeWithSimplex, make};
+module.exports = {evaluateExpr, evaluateFn, minimize, make};
