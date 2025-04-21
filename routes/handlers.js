@@ -10,9 +10,10 @@ const make = handler => {
         if (result.error) {
             response.status(500);
             console.error({error: result.error});
-            return response.json({error: result.error});
+            response.json({error: result.error});
+        } else {
+            response.json({message: result.info});
         }
-        response.json({message: result.info});
     }
 }
 
@@ -25,6 +26,7 @@ const evaluateExpr = params => {
 
 const evaluateFn = params => {
     let {fnStr, vars, vals} = params;
+    // fn will be changed to expression below
     let exprStr = processExpr(fnStr);
     let result = parsers.arrayStr(vars);
     if (result.error) return {error: result.error};
