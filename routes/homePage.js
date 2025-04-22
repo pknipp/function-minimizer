@@ -2,7 +2,7 @@ const base = "https://function-minimizer-adfd6c2c8012.herokuapp.com/";
 
 const urlFrags = {
     evaluate_expression: "/evaluate-expression/(6-5sin(4))D(3**2+1)",
-    evaluate_function: "/evaluate-function/(x+5sin(y))D(z**2+1)/[x,y,z]/[6,4,3]",
+    evaluate_function: "/evaluate-function/(x-5sin(y))D(z**2+1)/[x,y,z]/[6,4,3]",
     minimize: "/minimize/4x**4+2xy+3y**2+4x+5y+6/[x,y]/random",
 };
 
@@ -108,7 +108,7 @@ const homePage = `
                     <button id="evaluate_function">
                         CLICK
                     </button>
-                    [x + 5sin(y)] / (z<sup>2</sup> + 1)
+                    [x - 5sin(y)] / (z<sup>2</sup> + 1)
                     <br/>evaluated at (x, y, z) = (6, 4, 3)
                 </td>
             </tr>
@@ -142,7 +142,7 @@ const homePage = `
 
     <ul>
         <li>
-            If you want the response as json rather than as html, simply insert <tt>omit /json from the address.
+            If you want the response as json rather than as html, simply insert <tt>api</tt> after <tt>...heroku.com</tt> in the address.
         </li>
     </ul>
     <script>
