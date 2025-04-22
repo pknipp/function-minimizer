@@ -40,7 +40,7 @@ module.exports = (json, title) => {
     <ul>
       ${(stringPermanent && !fnStr) ? `<li>expression: ${stringPermanent} </li>` : ""}
       ${fnStr ? `<li>function: ${fnStr} </li>` : ""}
-      ${vars ? `<li>variables: <i>${vars.join(", ")}</I> </li>` : ""}
+      ${vars ? `<li>independent variables: <i>${vars.join(", ")}</I> </li>` : ""}
       ${coords ? `<li>coordinates: (${coords.join(", ")}) </li>` : ""}
       ${simplex ? `<li>simplex: ${JSON.stringify(simplex)} </li>` : ""}
     </ul>
@@ -51,9 +51,9 @@ module.exports = (json, title) => {
     <div><h3>Output(s):</h3 >
       <ul>
         ${iter ? `
-          <li>number of iterations needed to reach minimum: ${iter} </li>
-          <li> dependent variable: ${y} </li>
-          <li> independent variables:
+          <li>number of iterations needed to find minimum: ${iter} </li>
+          <li> value of dependent variable: ${y} </li>
+          <li> value(s) of independent variables:
             <ul>
               ${vars.map((varName, i) => `
                 <li>

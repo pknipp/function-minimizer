@@ -38,7 +38,7 @@ const homePage = `
             >
                 Nelder-Mead method
             </a>,
-            as presented on page 292 of Chapter 10 of the 1987 edition of <I>Numerical Recipes</I>, by William Press, Brian Flannery, Saul Teukolsky, and william Vetterling.  In addition to solving this optimization problem, this API also performs two more basic tasks, each requiring the parsing of a string: expression evaluation and function evaluation .
+            as presented on page 292 of Chapter 10 of the 1987 edition of <I>Numerical Recipes</I>, by William Press, Brian Flannery, Saul Teukolsky, and william Vetterling.  In addition to solving this optimization problem, this API also performs two more basic tasks that require the parsing of a string: expression evaluation and function evaluation .
         </div>
         <p><b>Params:</b></p>
         <ul>
@@ -59,10 +59,18 @@ const homePage = `
                 <tt>:fnStr</tt> is a string that defines a function.  It includes expressions and variable names, as defined above.
             </li>
             <li>
-                <tt>:coords</tt> is a bracket-delimited list of the coordinate of a point (ie, independent variables) where a function is to be evaluated.
+                <tt>:coords</tt> is a bracket-delimited list of the coordinates of a point (ie, independent variables) where a function is to be evaluated.
             </li>
             <li>
-                <tt>:simplex</tt> is the list of <tt>:coords</tt> that constitute a simplex, a data structure used for function minimization.  A simplex contains one more than the dimensionality of the space: a segment in one dimension, a triangle in two dimensions, or a tetrahedron in three.
+                <tt>:simplex</tt> is the list of <tt>:coords</tt> that constitute a
+                    <a
+                        href="https://en.wikipedia.org/wiki/Simplex"
+                        target='_blank'
+                        rel='noopener noreferrer'
+                    >
+                        simplex,
+                    </a>
+                    a data structure used for function minimization.  A simplex contains one more point than the dimensionality of the space: a segment in one dimension, a triangle in two dimensions, or a tetrahedron in three.
             </li>
         </ul>
 
@@ -71,14 +79,14 @@ const homePage = `
 
     <ul>
         <li>
-            <b>Expression evaluator:</b> This simply determines the value of an algebraic expansion. <button id="evaluate_expression">example</button><br/>
+            <tt>expression-evaluator</tt> simply determines the value of an algebraic expansion. <button id="evaluate_expression">example</button><br/>
         </li>
         <li>
-            <b>Function evaluator:</b> This evaluates a function at a particular point.
+            <tt>function-evaluator</tt>: This evaluates a function at a particular point.
             <button id="evaluate_function">example</button>
         </li>
         <li>
-            <b>Function minimizer:</b> This finds a local minimum of a function, given an initial simplex. <button id="minimize">example</button>
+            <tt>minimizer</tt> finds a local minimum of a function, given an initial simplex. <button id="minimize">example</button>
         </li>
     </ul>
     <script>
