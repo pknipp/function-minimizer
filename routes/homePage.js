@@ -60,7 +60,7 @@ const homePage = `
                 </a> docs. Spaces are allowed but discouraged.
             </li>
             <li>
-                <tt>:vars</tt> is is a bracket-delimited list of strings, each of which is the symbol for a variable which appears in a function (described below).  Each string satisfies the same rules as javascript variables. The first character must be either a letter (upper-case or lower-case) or underscore.  Any subsequent character may be that or a numeral.
+                <tt>:vars</tt> is is a bracket-delimited list of strings, each of which is the name for a variable which appears in a function (described below).  Each string satisfies the same rules as javascript variables. The first character must be either a letter (upper-case or lower-case) or underscore.  Any subsequent character may be that or a numeral.  No variable name can be a substring of the name of a unary (for which the previous bullet includes a link to a list).
             </li>
             <li>
                 <tt>:fnStr</tt> is a string that defines a function.  It includes expressions and variable names, as defined above.
@@ -147,13 +147,10 @@ const homePage = `
         </tbody>
     </table>
 
-    <p><b>Notes:</b></p>
-
-    <ul>
-        <li>
-            If you want the response as json rather than as html, simply insert <tt>api</tt> after <tt>...heroku.com</tt> in the address.
-        </li>
-    </ul>
+    <p>
+        <b>Note:</b>
+        If you want the response as json rather than as html, simply insert <tt>api</tt> after <tt>...heroku.com</tt> in the address.
+    </p>
     <script>
       const buttons = Array.from(document.getElementsByTagName("button"));
       const setExample = example => {
