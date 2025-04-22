@@ -2,7 +2,7 @@ const ParseExpression = require('parse-expression');
 const Minimizer = require('minimize-fn');
 
 const parsers = require('./parsers');
-const { processExpr, makeFn } = require('./helpers');
+const { processExpression, makeFunction } = require('./helpers');
 const render = require('./render');
 
 const makeJSON = handler => {
@@ -31,17 +31,17 @@ const makeHtml = handler => {
     };
 };
 
-const evaluateExpr = params => {
-    const exprStr = processExpr(params.exprStr);
+const evaluateExpression = params => {
+    const exprStr = processExpression(params.exprStr);
     const parser = new ParseExpression(exprStr);
     parser.loadEMDAS().evalEMDAS();
     return {error: parser.error, info: parser, title: "Expression Evaluator"};
 }
 
-const evaluateFn = params => {
+const evaluateFunction = params => {
     let {fnStr, vars, coords} = params;
     // fn will be changed to expression below
-    let exprStr = processExpr(fnStr);
+    let exprStr = processExpression(fnStr);
     let result = parsers.arrayStr(vars);
     if (result.error) return {error: result.error};
     vars = result.array;
@@ -67,13 +67,13 @@ const evaluateFn = params => {
 const minimize = params => {
     let {fnStr, vars, simplex, maxIter} = params;
     const hasSimplex = simplex || false;
-    fnStr = processExpr(fnStr);
+    fnStr = processExpression(fnStr);
     let result = parsers.arrayStr(vars);
     if (result.error) return {error: result.error};
     vars = result.array;
     const error = parsers.vars(vars);
     if (error) return {error};
-    const fn = makeFn(fnStr, vars);
+    const fn = makeFunction(fnStr, vars);
     if (hasSimplex) {
         result = parsers.simplex(simplex, vars.length);
         if (result.error) return {error: result.error};
@@ -93,4 +93,4 @@ const minimize = params => {
     };
 }
 
-module.exports = {evaluateExpr, evaluateFn, minimize, makeJSON, makeHtml};
+module.exports = {evaluateExpression, evaluateFunction, minimize, makeJSON, makeHtml};

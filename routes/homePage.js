@@ -1,0 +1,95 @@
+const base = "https://function-minimizer-adfd6c2c8012.herokuapp.com/";
+
+const urls = JSON.stringify({
+    evaluate_expression: base + "evaluate-expression/(6-5sin(4))D(3**2+1)",
+    evaluate_function: base + "evaluate-function/(x+5sin(y))D(z**2+1)/[x,y,z]/[6,4,3]",
+    minimize: base + "minimize/4x**4+2xy+3y**2+4x+5y+6/[x,y]/random",
+});
+
+const homePage = `
+<head>
+    <title>Minimizer</title>
+    <script>
+    </script>
+</head>
+<body>
+    <div style="padding-top: 20px; padding-left: 40px; padding-right: 40px;">
+        <h3><p align=center>Function Minimizer</p></h3>
+        <p align=center>
+            <a href="https://pknipp.github.io/math">
+                Return
+            </a> to the Math APIs page.
+            </br>
+            creator:&nbsp;<a
+                href='https://pknipp.github.io/'
+                target='_blank' rel='noopener noreferrer'
+            >
+                Peter Knipp
+            </a>
+            <br/>
+        </p>
+        <p><b>Background:</b><br/>
+        <div>
+            This API finds a local minimum of a multidimensional function if given the function's string representation.  It uses
+            <a
+                href="https://en.wikipedia.org/wiki/Nelder%E2%80%93Mead_method"
+                target='_blank'
+                rel='noopener noreferrer'
+            >
+                Nelder-Mead method
+            </a>,
+            as presented on page 292 of Chapter 10 of the 1987 edition of <I>Numerical Recipes</I>, by William Press, Brian Flannery, Saul Teukolsky, and william Vetterling.  In addition to solving this optimization problem, this API also performs two more basic tasks, each requiring the parsing of a string: expression evaluation and function evaluation .
+        </div>
+        <p><b>Params:</b></p>
+        <ul>
+            <li>
+                <tt>:exprStr</tt> is is a string representation of a valid arithmetic expression.  As such it contains numbers, parentheses, binary operations (addition, subtraction, multiplication, division, and exponentiation), and unary operations (sin, sqrt, log, etc).  Addition and subtraction are simply represented by <tt>+</tt> and <tt>-</tt>, respectively. Multiplication is represented by <tt>*</tt> or nothing (for the case of implied multiplication). Division is represented by <tt>DIV</tt> or <tt>D</tt>, owing to the fact that a slash has a special meaning in a url.  Exponentiation may be represented by either <tt>**</tt> or <tt>^</tt>, but the former is preferable owing to the fact that the latter will be replaced by <tt>%5E</tt> in the url.  The unary may be any of the static <tt>Math</tt> methods listed in the
+                <a
+                    href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Math"
+                    target='_blank'
+                    rel='noopener noreferrer'
+                >
+                    javascript
+                </a> docs.
+            </li>
+            <li>
+                <tt>:vars</tt> is is a bracket-delimited list of strings, each of which is the symbol for a variable which appears in a function (described below).  Each string satisfies the same rules as javascript variables. The first character must be either a letter (upper-case or lower-case) or underscore.  Any subsequent character may be that or a numeral.
+            </li>
+            <li>
+                <tt>:fnStr</tt> is a string that defines a function.  It includes expressions and variable names, as defined above.
+            </li>
+            <li>
+                <tt>:coords</tt> is a bracket-delimited list of the coordinate of a point (ie, independent variables) where a function is to be evaluated.
+            </li>
+            <li>
+                <tt>:simplex</tt> is the list of <tt>:coords</tt> that constitute a simplex, a data structure used for function minimization.  A simplex contains one more than the dimensionality of the space: a segment in one dimension, a triangle in two dimensions, or a tetrahedron in three.
+            </li>
+        </ul>
+
+
+    <p><b>Endpoints:</b></p>
+
+    <ul>
+        <li>
+            <b>Expression evaluator:</b> This simply determines the value of an algebraic expansion. <button id="evaluate_expression">example</button><br/>
+        </li>
+        <li>
+            <b>Function evaluator:</b> This evaluates a function at a particular point.
+            <button id="evaluate_function">example</button>
+        </li>
+        <li>
+            <b>Function minimizer:</b> This finds a local minimum of a function, given an initial simplex. <button id="minimize">example</button>
+        </li>
+    </ul>
+    <script>
+      const buttons = Array.from(document.getElementsByTagName("button"));
+      const setExample = example => {
+          window.location.href = ${urls}[example];
+      };
+      buttons.forEach(button => {
+        const example = button.getAttribute("id");
+        button.addEventListener("click", e => setExample(example));
+      });
+    </script>
+</body>`;
+module.exports = homePage;

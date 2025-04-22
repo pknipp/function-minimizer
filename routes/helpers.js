@@ -1,6 +1,6 @@
 const ParseExpression = require('parse-expression');
 
-const processExpr = str => {
+const processExpression = str => {
     str = str.replace(/\s/g, '');
     return [["D", "/"], ["DIV", "/"], ["**", "^"]].reduce((str, [charIn, charOut]) => {
         return str.split(charIn).join(charOut);
@@ -21,7 +21,7 @@ const isLegalChar = char => {
 
 const isLegalVar = chars => chars.length && isLegalStart(chars[0]) && chars.slice(1).split("").every(char => isLegalChar(char));
 
-const makeFn = (fnStr, vars) => {
+const makeFunction = (fnStr, vars) => {
     return coords => {
         let exprStr = fnStr;
         vars.forEach((varName, i) => exprStr = exprStr.split(varName).join(`(${coords[i]})`));
@@ -31,4 +31,4 @@ const makeFn = (fnStr, vars) => {
     };
 };
 
-module.exports = { processExpr, isLegalVar, makeFn };
+module.exports = { processExpression, isLegalVar, makeFunction };
