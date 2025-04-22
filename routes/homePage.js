@@ -5,6 +5,7 @@ const urlFrags = {
     evaluate_function: "/evaluate-function/(x-5sin(y))D(z**2+1)/[x,y,z]/[6,4,3]",
     minimize0: "/minimize/4x**4+2xy+3y**2+4x+5y+6/[x,y]/random",
     minimize1: "/minimize/4x**4+2xy+3y**2+4x+5y+6/[x,y]/[[0,0],[1,0],[0,1]]",
+    minimize2: "/minimize/4x**4+2xy+3y**2+4x+5y+6/[x,y]/random/40",
 };
 
 const urls = Object.entries(urlFrags).reduce((urls, [name, frag]) => {
