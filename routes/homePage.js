@@ -114,7 +114,7 @@ const homePage = `
                 </td>
             </tr>
             <tr>
-                <td>minimizes a function</td>
+                <td rowspan="2">minimizes a function</td>
                 <td><tt>/minimize/:fnStr/:vars/random</tt></td>
                 <td>
                     <button id="minimize">
@@ -124,21 +124,18 @@ const homePage = `
                     <br/>minimized with a random simplex
                 </td>
             </tr>
+            <tr>
+                <td><tt>/minimize/:fnStr/:vars/:simplex</tt></td>
+                <td>
+                    <button id="minimize">
+                        CLICK
+                    </button>
+                    same as above, but using a simplex
+                </td>
+            </tr>
         </tbody>
     </table>
 
-    <ul>
-        <li>
-            <tt>expression-evaluator</tt> simply determines the value of an algebraic expansion. <button id="evaluate_expression">example</button><br/>
-        </li>
-        <li>
-            <tt>function-evaluator</tt>: This evaluates a function at a particular point.
-            <button id="evaluate_function">example</button>
-        </li>
-        <li>
-            <tt>minimizer</tt> finds a local minimum of a function, given an initial simplex. <button id="minimize">example</button>
-        </li>
-    </ul>
     <p><b>Notes:</b></p>
 
     <ul>
@@ -149,8 +146,7 @@ const homePage = `
     <script>
       const buttons = Array.from(document.getElementsByTagName("button"));
       const setExample = example => {
-        console.log("example = ", example);
-          window.location.href = ${JSON.stringify(urls)}[example];
+        window.location.href = ${JSON.stringify(urls)}[example];
       };
       buttons.forEach(button => {
         const example = button.getAttribute("id");
