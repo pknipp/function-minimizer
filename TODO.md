@@ -1,1 +1,1 @@
-Arrange routes differently (index, api, and non-json)?
+Is there a bug in minimize-fn?
