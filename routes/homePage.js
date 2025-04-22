@@ -98,7 +98,7 @@ const homePage = `
                     <button id="evaluate_expression">
                         CLICK
                     </button>
-                    ${urls["evaluateExpression"]}
+                    ${urls["evaluate_expression"]}
                 </td>
             </tr>
         </tbody>
