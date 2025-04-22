@@ -1,10 +1,14 @@
 const base = "https://function-minimizer-adfd6c2c8012.herokuapp.com/";
 
-const urls = JSON.stringify({
-    evaluate_expression: base + "evaluate-expression/(6-5sin(4))D(3**2+1)",
-    evaluate_function: base + "evaluate-function/(x+5sin(y))D(z**2+1)/[x,y,z]/[6,4,3]",
-    minimize: base + "minimize/4x**4+2xy+3y**2+4x+5y+6/[x,y]/random",
-});
+const urlFrags = {
+    evaluate_expression: "/evaluate-expression/(6-5sin(4))D(3**2+1)",
+    evaluate_function: "/evaluate-function/(x+5sin(y))D(z**2+1)/[x,y,z]/[6,4,3]",
+    minimize: "/minimize/4x**4+2xy+3y**2+4x+5y+6/[x,y]/random",
+};
+
+const urls = Object.entries(urlFrags).reduce((urls, [name, frag]) => {
+    return {...urls, key: base + frag};
+}, {});
 
 const homePage = `
 <head>
@@ -70,12 +74,35 @@ const homePage = `
                     >
                         simplex,
                     </a>
-                    a data structure used for function minimization.  A simplex contains one more point than the dimensionality of the space: a segment in one dimension, a triangle in two dimensions, or a tetrahedron in three.
+                    a data structure used for function minimization.  A simplex contains one more point than the dimensionality of the space: a segment in one dimension, a triangle in two dimensions, or a tetrahedron in three.  This param is optional, in that you can replace it by <tt>random</tt> if you are willing to allow the API to use a random simplex.
+            </li>
+            <li>
+                <tt>:maxIter</tt> (optional) allows the user to increase above 500 the maximum number of iterations of the Nelder-Mead method, as is sometimes necessary in order to converge to an answer.
             </li>
         </ul>
 
 
     <p><b>Endpoints:</b></p>
+
+    <table border="1">
+        <thead>
+            <tr>
+                <th>task</th><th>url fragment(s)</th><th>example(s)</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td>evaluates an expression</td>
+                <td><tt>/expression-evaluator/:exprStr</tt></td>
+                <td>
+                    <button id="evaluate_expression">
+                        CLICK
+                    </button>
+                    ${urls["evaluateExpression"]}
+                </td>
+            </tr>
+        </tbody>
+    </table>
 
     <ul>
         <li>
@@ -99,7 +126,7 @@ const homePage = `
     <script>
       const buttons = Array.from(document.getElementsByTagName("button"));
       const setExample = example => {
-          window.location.href = ${urls}[example];
+          window.location.href = ${JSON.stringify(urls)}[example];
       };
       buttons.forEach(button => {
         const example = button.getAttribute("id");
