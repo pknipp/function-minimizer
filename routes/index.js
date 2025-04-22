@@ -1,14 +1,15 @@
 const router = require('express').Router();
 
-const api = require('./api');
+// const api = require('./api');
 const render = require('./render.js');
 const handlers = require('./handlers.js');
 const homePage = require('./homePage.js');
 
 const makeHtml = handlers.makeHtml;
 
-router.use('/api', api);
+// router.use('/api', api);
 
+// html routes
 router.get('', (req, res) => res.send(homePage));
 
 router.get(
@@ -26,5 +27,14 @@ router.get(
     );
 }));
 
+// json routes
+router.get('/evaluate-expression/:exprStr', makeJSON(handlers.evaluateExpression));
+router.get('/evaluate-function/:fnStr/:vars/:coords', makeJSON(handlers.evaluateFunction));
+["random", ":simplex"].forEach(simplex => ["/:maxIter", ""].forEach(maxIter => {
+    router.get(
+        `/minimize/:fnStr/:vars/${simplex}${maxIter}`,
+        makeJSON(handlers.minimize),
+    );
+}));
 
 module.exports = router;
