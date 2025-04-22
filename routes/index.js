@@ -5,7 +5,7 @@ const render = require('./render.js');
 const handlers = require('./handlers.js');
 const homePage = require('./homePage.js');
 
-const makeHtml = handlers.makeHtml;
+const [makeHtml, makeJSON] = ["makeHtml", "makeJSON"].map(type => handlers[type]);
 
 // router.use('/api', api);
 

@@ -4,7 +4,7 @@ const Minimizer = require('minimize-fn');
 
 const handlers = require("../handlers.js");
 
-const makeJSON = handlers.makeJSON;
+
 
 // const routes = ['only'];
 // routes.forEach(route => router.use(`/${route}`, require(`./${route}`)));
