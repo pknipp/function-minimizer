@@ -7,7 +7,7 @@ const urlFrags = {
 };
 
 const urls = Object.entries(urlFrags).reduce((urls, [name, frag]) => {
-    return {...urls, key: base + frag};
+    return {...urls, name: base + frag};
 }, {});
 
 const homePage = `
