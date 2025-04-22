@@ -28,11 +28,11 @@ router.get(
 }));
 
 // json routes
-router.get('/evaluate-expression/:exprStr', makeJSON(handlers.evaluateExpression));
-router.get('/evaluate-function/:fnStr/:vars/:coords', makeJSON(handlers.evaluateFunction));
+router.get('/api/evaluate-expression/:exprStr', makeJSON(handlers.evaluateExpression));
+router.get('/api/evaluate-function/:fnStr/:vars/:coords', makeJSON(handlers.evaluateFunction));
 ["random", ":simplex"].forEach(simplex => ["/:maxIter", ""].forEach(maxIter => {
     router.get(
-        `/minimize/:fnStr/:vars/${simplex}${maxIter}`,
+        `/api/minimize/:fnStr/:vars/${simplex}${maxIter}`,
         makeJSON(handlers.minimize),
     );
 }));
