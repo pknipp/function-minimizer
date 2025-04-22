@@ -43,14 +43,14 @@ const homePage = `
         <p><b>Params:</b></p>
         <ul>
             <li>
-                <tt>:exprStr</tt> is is a string representation of a valid arithmetic expression.  As such it contains numbers, parentheses, binary operations (addition, subtraction, multiplication, division, and exponentiation), and unary operations (sin, sqrt, log, etc).  Addition and subtraction are simply represented by <tt>+</tt> and <tt>-</tt>, respectively. Multiplication is represented by <tt>*</tt> or nothing (for the case of implied multiplication). Division is represented by <tt>DIV</tt> or <tt>D</tt>, owing to the fact that a slash has a special meaning in a url.  Exponentiation may be represented by either <tt>**</tt> or <tt>^</tt>, but the former is preferable owing to the fact that the latter will be replaced by <tt>%5E</tt> in the url.  The unary may be any of the static <tt>Math</tt> methods listed in the
+                <tt>:exprStr</tt> is is a string representation of a valid arithmetic expression.  As such it contains numbers (including <tt>PI</tt> and <tt>E</tt>), parentheses, binary operations (addition, subtraction, multiplication, division, and exponentiation), and unary operations (sin, sqrt, log, etc).  Addition and subtraction are simply represented by <tt>+</tt> and <tt>-</tt>, respectively. Multiplication is represented by <tt>*</tt> or nothing (for the case of implied multiplication). Division is represented by <tt>DIV</tt> or <tt>D</tt>, owing to the fact that the usual symbol for division (<tt>/</tt>) has a special meaning in a url.  Exponentiation may be represented by either <tt>**</tt> or <tt>^</tt>, but the former is preferable owing to the fact that the latter will be replaced by <tt>%5E</tt> in the url.  The unary may be any of the static <tt>Math</tt> methods listed in the
                 <a
                     href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Math"
                     target='_blank'
                     rel='noopener noreferrer'
                 >
                     javascript
-                </a> docs.
+                </a> docs. Spaces are allowed but discouraged.
             </li>
             <li>
                 <tt>:vars</tt> is is a bracket-delimited list of strings, each of which is the symbol for a variable which appears in a function (described below).  Each string satisfies the same rules as javascript variables. The first character must be either a letter (upper-case or lower-case) or underscore.  Any subsequent character may be that or a numeral.
@@ -87,6 +87,13 @@ const homePage = `
         </li>
         <li>
             <tt>minimizer</tt> finds a local minimum of a function, given an initial simplex. <button id="minimize">example</button>
+        </li>
+    </ul>
+    <p><b>Notes:</b></p>
+
+    <ul>
+        <li>
+            If you want the response as json rather than as html, simply insert <tt>omit /json from the address.
         </li>
     </ul>
     <script>
