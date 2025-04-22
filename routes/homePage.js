@@ -11,7 +11,6 @@ const urlFrags = {
 const urls = Object.entries(urlFrags).reduce((urls, [name, frag]) => {
     return {...urls, [name]: base + frag};
 }, {});
-console.log("urls = ", urls);
 
 const homePage = `
 <head>
