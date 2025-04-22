@@ -147,7 +147,6 @@ const homePage = `
     </ul>
     <script>
       const buttons = Array.from(document.getElementsByTagName("button"));
-      console.log("urls = ", urls);
       const setExample = example => {
         console.log("example = ", example);
           window.location.href = ${JSON.stringify(urls)}[example];
