@@ -150,7 +150,7 @@ const homePage = `
       console.log("urls = ", urls);
       const setExample = example => {
         console.log("example = ", example);
-          window.location.href = ${urls}[example];
+          window.location.href = ${JSON.stringify(urls)}[example];
       };
       buttons.forEach(button => {
         const example = button.getAttribute("id");
