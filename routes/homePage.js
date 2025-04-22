@@ -3,7 +3,8 @@ const base = "https://function-minimizer-adfd6c2c8012.herokuapp.com";
 const urlFrags = {
     evaluate_expression: "/evaluate-expression/(6-5sin(4))D(3**2+1)",
     evaluate_function: "/evaluate-function/(x-5sin(y))D(z**2+1)/[x,y,z]/[6,4,3]",
-    minimize: "/minimize/4x**4+2xy+3y**2+4x+5y+6/[x,y]/random",
+    minimize0: "/minimize/4x**4+2xy+3y**2+4x+5y+6/[x,y]/random",
+    minimize1: "/minimize/4x**4+2xy+3y**2+4x+5y+6/[x,y]/[[0,0],[1,0],[0,1]]",
 };
 
 const urls = Object.entries(urlFrags).reduce((urls, [name, frag]) => {
@@ -114,10 +115,10 @@ const homePage = `
                 </td>
             </tr>
             <tr>
-                <td rowspan="2">minimizes a function</td>
+                <td rowspan="3">minimizes a function</td>
                 <td><tt>/minimize/:fnStr/:vars/random</tt></td>
                 <td>
-                    <button id="minimize">
+                    <button id="minimize0">
                         CLICK
                     </button>
                     4x<sup>4</sup> + 2xy + 3y<sup>2</sup> + 4x + 5y + 6
@@ -127,10 +128,19 @@ const homePage = `
             <tr>
                 <td><tt>/minimize/:fnStr/:vars/:simplex</tt></td>
                 <td>
-                    <button id="minimize">
+                    <button id="minimize1">
                         CLICK
                     </button>
-                    same as above, but using a simplex
+                    same as above, but specifying a simplex
+                </td>
+            </tr>
+            <tr>
+                <td><tt>/minimize/:fnStr/:vars/random/40</tt></td>
+                <td>
+                    <button id="minimize2">
+                        CLICK
+                    </button>
+                    same as first example, but reducing iteration-limit from 500 to 40
                 </td>
             </tr>
         </tbody>
