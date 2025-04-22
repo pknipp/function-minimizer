@@ -1,7 +1,7 @@
 const router = require('express').Router();
 
 const [render, handlers, homePage] = ["render", "handlers", "homePage"].map(
-    filename => require(`./${filename}.js`);
+    filename => require(`./${filename}.js`)
 );
 
 const [makeHtml, makeJSON] = ["makeHtml", "makeJSON"].map(type => handlers[type]);
