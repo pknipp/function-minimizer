@@ -1,4 +1,4 @@
-const base = "https://function-minimizer-adfd6c2c8012.herokuapp.com/";
+const base = "https://function-minimizer-adfd6c2c8012.herokuapp.com";
 
 const urlFrags = {
     evaluate_expression: "/evaluate-expression/(6-5sin(4))D(3**2+1)",
@@ -148,7 +148,7 @@ const homePage = `
     <script>
       const buttons = Array.from(document.getElementsByTagName("button"));
       const setExample = example => {
-          window.location.href = ${JSON.stringify(urls)}[example];
+          window.location.href = ${urls}[example];
       };
       buttons.forEach(button => {
         const example = button.getAttribute("id");
