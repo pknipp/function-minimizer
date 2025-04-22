@@ -98,7 +98,7 @@ const homePage = `
                     <button id="evaluate_expression">
                         CLICK
                     </button>
-                    ${urlFrags}
+                    ${urlFrags["evaluate_expression"]}
                 </td>
             </tr>
         </tbody>
