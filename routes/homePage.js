@@ -7,7 +7,6 @@ const urlFrags = {
 };
 
 const urls = Object.entries(urlFrags).reduce((urls, [name, frag]) => {
-    console.log("name/frag = ", name, frag);
     return {...urls, [name]: base + frag};
 }, {});
 console.log("urls = ", urls);
@@ -95,7 +94,7 @@ const homePage = `
         <tbody>
             <tr>
                 <td>evaluates an expression</td>
-                <td><tt>/expression-evaluator/:exprStr</tt></td>
+                <td><tt>/evaluate-expression/:exprStr</tt></td>
                 <td>
                     <button id="evaluate_expression">
                         CLICK
@@ -116,9 +115,9 @@ const homePage = `
             </tr>
             <tr>
                 <td>minimizes a function</td>
-                <td><tt>/minimize-function/:fnStr/:vars/random</tt></td>
+                <td><tt>/minimize/:fnStr/:vars/random</tt></td>
                 <td>
-                    <button id="minimize_function">
+                    <button id="minimize">
                         CLICK
                     </button>
                     4x<sup>4</sup> + 2xy + 3y<sup>2</sup> + 4x + 5y + 6

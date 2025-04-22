@@ -13,7 +13,7 @@ router.get('/evaluate-expression/:exprStr', makeJSON(handlers.evaluateExpression
 router.get('/evaluate-function/:fnStr/:vars/:coords', makeJSON(handlers.evaluateFunction));
 ["random", ":simplex"].forEach(simplex => ["/:maxIter", ""].forEach(maxIter => {
     router.get(
-        `/minimizer/:fnStr/:vars/${simplex}${maxIter}`,
+        `/minimize/:fnStr/:vars/${simplex}${maxIter}`,
         makeJSON(handlers.minimize),
     );
 }));
