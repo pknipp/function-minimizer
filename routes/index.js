@@ -1,13 +1,10 @@
 const router = require('express').Router();
 
-// const api = require('./api');
-const render = require('./render.js');
-const handlers = require('./handlers.js');
-const homePage = require('./homePage.js');
+const [render, handlers, homePage] = ["render", "handlers", "homePage"].map(
+    filename => require(`./${filename}.js`);
+);
 
 const [makeHtml, makeJSON] = ["makeHtml", "makeJSON"].map(type => handlers[type]);
-
-// router.use('/api', api);
 
 // html routes
 router.get('', (req, res) => res.send(homePage));
