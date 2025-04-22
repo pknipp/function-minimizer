@@ -98,7 +98,7 @@ const homePage = `
                     <button id="evaluate_expression">
                         CLICK
                     </button>
-                    [6 - 5sin(4)] / (3<sup>2</sup + 1)
+                    [6 - 5sin(4)] / (3<sup>2</sup> + 1)
                 </td>
             </tr>
             <tr>
