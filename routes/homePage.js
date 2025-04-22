@@ -98,7 +98,29 @@ const homePage = `
                     <button id="evaluate_expression">
                         CLICK
                     </button>
-                    ${urlFrags["evaluate_expression"]}
+                    [6 - 5sin(4)] / (3<sup>2</sup + 1)
+                </td>
+            </tr>
+            <tr>
+                <td>evaluates a function</td>
+                <td><tt>/evaluate-function/:fnStr/:vars/:coords</tt></td>
+                <td>
+                    <button id="evaluate_function">
+                        CLICK
+                    </button>
+                    [x + 5sin(y)] / (z<sup>2</sup> + 1)
+                    <br/>evaluated at (x, y, z) = (6, 4, 3)
+                </td>
+            </tr>
+            <tr>
+                <td>minimizes a function</td>
+                <td><tt>/minimize-function/:fnStr/:vars/random</tt></td>
+                <td>
+                    <button id="minimize_function">
+                        CLICK
+                    </button>
+                    4x<sup>4</sup> + 2xy + 3y<sup>2</sup> + 4x + 5y + 6
+                    <br/>minimized with a random simplex
                 </td>
             </tr>
         </tbody>
