@@ -146,9 +146,15 @@ const homePage = `
         </tbody>
     </table>
 
-    <p>
-        <b>Note:</b>
-        If you want the response as json rather than as html, simply insert <tt>api</tt> after <tt>...heroku.com</tt> in the address.
+    <p><b>Notes:</b></p>
+        <ul>
+            <li>
+                If you want the response as json rather than as html, simply insert <tt>api</tt> after <tt>...heroku.com</tt> in the address.
+            </li>
+            <li>
+                If you want to <I>max</I>imize a function instead of <I>min</I>imize it, of course you simply need to wrap your function string with <tt>-(...)</tt>.
+            </li>
+        </ul>
     </p>
     <script>
       const buttons = Array.from(document.getElementsByTagName("button"));
