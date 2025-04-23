@@ -1,8 +1,3 @@
-// const getGraph = async url => {
-//   const response = await fetch(url);
-//   return await response.text();
-// }
-
 module.exports = (json, title) => {
   let html = `
     <html
