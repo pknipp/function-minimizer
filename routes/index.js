@@ -9,7 +9,6 @@ const [makeHtml, makeJSON] = ["makeHtml", "makeJSON"].map(type => handlers[type]
 // html routes
 router.get('', (req, res) => {
     console.log("req.ip = ", req.ip);
-    console.log("req = ", req);
     res.send(homePage);
 });
 
