@@ -11,7 +11,7 @@ router.get('', (req, res) => {
     console.log("req.ip = ", req.ip);
     console.log("req = ", req);
     res.send(homePage);
-};
+});
 
 router.get(
     '/evaluate-expression/:exprStr',
