@@ -7,7 +7,11 @@ const [render, handlers, homePage] = ["render", "handlers", "homePage"].map(
 const [makeHtml, makeJSON] = ["makeHtml", "makeJSON"].map(type => handlers[type]);
 
 // html routes
-router.get('', (req, res) => res.send(homePage));
+router.get('', (req, res) => {
+    console.log("req.ip = ", req.ip);
+    console.log("req = ", req);
+    res.send(homePage));
+};
 
 router.get(
     '/evaluate-expression/:exprStr',
