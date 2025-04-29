@@ -8,7 +8,7 @@ const [makeHtml, makeJSON] = ["makeHtml", "makeJSON"].map(type => handlers[type]
 
 // html routes
 router.get('', (req, res) => {
-    console.log("req.ip = ", req.ip);
+    console.log("req.headers['x-forwarded-for'] = ", req.headers['x-forwarded-for'];
     res.send(homePage);
 });
 
