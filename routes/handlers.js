@@ -2,7 +2,7 @@ const ParseExpression = require('parse-expression');
 const Minimizer = require('minimize-fn');
 
 const parsers = require('./parsers');
-const { processExpression, makeFunction } = require('./helpers');
+const { processExpression, makeFunction, toNonSciNotString } = require('./helpers');
 const render = require('./render');
 
 const makeJSON = handler => {
@@ -54,7 +54,7 @@ const evaluateFunction = params => {
     result = parsers.coords(coords);
     if (result.error) return {error: result.error};
     coords = result.coords;
-    coords.forEach((coord, i) => exprStr = exprStr.split(vars[i]).join(`(${coord})`));
+    coords.forEach((coord, i) => exprStr = exprStr.split(vars[i]).join(`(${toNonSciNotString(coord)})`));
     const parser = new ParseExpression(exprStr);
     parser.loadEMDAS().evalEMDAS();
     return {

@@ -31,4 +31,17 @@ const makeFunction = (fnStr, vars) => {
     };
 };
 
-module.exports = { processExpression, isLegalVar, makeFunction };
+const toNonSciNotString = x => {
+    if (!x) return "0";
+    const isNeg = x < 0;
+    if (isNeg) x = Math.abs(x);
+    let xStr = String(x);
+    const [mantissa, exponent] = xStr.split("e-");
+    if (exponent === undefined) return String(x);
+    const [int, decimal] = mantissa.split(".");
+    xStr = (isNeg ? "-" : "") + "0." + "0".repeat(exponent - 1) + int + decimal;
+    console.log("x/xStr = ", x, xStr);
+    return xStr;
+}
+
+module.exports = { processExpression, isLegalVar, makeFunction, toNonSciNotString };
